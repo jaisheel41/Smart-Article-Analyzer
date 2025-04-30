@@ -1,2 +1,2 @@
-Q: What fields has AI revolutionized?
-A: computer vision
+Q: what is the most important point covered in this document
+A: Continuous learning and ethical deployment

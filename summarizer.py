@@ -1,44 +1,42 @@
 # summarizer.py
 
+from transformers import pipeline
 import nltk
-from sklearn.feature_extraction.text import TfidfVectorizer
-from nltk.tokenize import sent_tokenize
-import numpy as np
 
-# Download punkt tokenizer if not already downloaded
 nltk.download('punkt')
+from nltk.tokenize import sent_tokenize
 
-def extract_summary(text, num_sentences=5):
+# Load summarization pipeline
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+
+def split_into_chunks(text, max_chunk_size=1024):
     """
-    Extract a summary from the given text by selecting the most important sentences
-    based on TF-IDF scoring.
-
-    Args:
-        text (str): The input text to summarize.
-        num_sentences (int): Number of summary sentences to extract.
-
-    Returns:
-        list: List of selected important sentences as the summary.
+    Split long text into manageable chunks based on sentence boundaries.
     """
-
-    # 1. Sentence Tokenization
     sentences = sent_tokenize(text)
-    
-    # If the text is too small, return all sentences
-    if len(sentences) <= num_sentences:
-        return sentences
+    chunks, current_chunk = [], ""
 
-    # 2. Calculate TF-IDF Matrix for the Sentences
-    vectorizer = TfidfVectorizer(stop_words='english')
-    tfidf_matrix = vectorizer.fit_transform(sentences)
+    for sentence in sentences:
+        if len(current_chunk) + len(sentence) <= max_chunk_size:
+            current_chunk += " " + sentence
+        else:
+            chunks.append(current_chunk.strip())
+            current_chunk = sentence
+    if current_chunk:
+        chunks.append(current_chunk.strip())
 
-    # 3. Compute sentence importance scores (sum of TF-IDF weights)
-    sentence_scores = np.array(tfidf_matrix.sum(axis=1)).flatten()
+    return chunks
 
-    # 4. Get the indices of the top N sentences
-    top_indices = sentence_scores.argsort()[-num_sentences:][::-1]
+def abstractive_summary(text, max_len=150):
+    """
+    Generate an abstractive summary using a transformer model.
+    Handles long documents by chunking.
+    """
+    text_chunks = split_into_chunks(text)
+    summaries = []
 
-    # 5. Arrange top sentences in their original order
-    top_sentences = [sentences[i] for i in sorted(top_indices)]
+    for chunk in text_chunks:
+        summary = summarizer(chunk, max_length=max_len, min_length=40, do_sample=False)[0]['summary_text']
+        summaries.append(summary)
 
-    return top_sentences
+    return summaries

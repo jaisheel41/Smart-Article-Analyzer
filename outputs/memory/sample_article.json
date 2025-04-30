@@ -1,0 +1,55 @@
+{
+  "summary": [
+    "Artificial Intelligence (AI) is transforming the modern world. From healthcare to finance to education, AI-powered solutions are optimizing efficiency. Ethical concerns around AI are growing. Organizations and governments are working together to ensure responsible AI development.",
+    "AI is an integral part of the present, reshaping industries, jobs, and daily life. Continuous learning and ethical deployment are essential to unlock AI's full potential for humanity. It is also essential to ensure it is used in a safe and ethical way."
+  ],
+  "keywords": [
+    [
+      "concerns ai",
+      0.5756
+    ],
+    [
+      "models google bert",
+      0.455
+    ],
+    [
+      "text openai gpt",
+      0.3452
+    ],
+    [
+      "transparency data privacy",
+      0.3043
+    ],
+    [
+      "recognize images detect",
+      0.2568
+    ],
+    [
+      "world healthcare finance",
+      0.2367
+    ],
+    [
+      "huggingface transformers library",
+      0.2129
+    ],
+    [
+      "reshaping industries jobs",
+      0.1975
+    ],
+    [
+      "deployment essential unlock",
+      0.0636
+    ],
+    [
+      "integral present",
+      0.0608
+    ]
+  ],
+  "qa": [
+    {
+      "question": "what is the most important point covered in this document",
+      "answer": "Continuous learning and ethical deployment",
+      "timestamp": "2025-04-30T20:33:05.030374"
+    }
+  ]
+}
