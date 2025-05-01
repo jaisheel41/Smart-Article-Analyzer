@@ -9,6 +9,9 @@ from qa_advanced import answer_question
 from memory_store import load_memory, save_summary, save_keywords, save_qa, display_memory
 from utils import save_to_file, print_list
 from report_generator import create_pdf_report
+from qa_falcon import generate_paragraph_answer
+from qa_advanced import get_top_k_chunks, split_text_to_chunks
+
 
 import os
 from memory_store import (
@@ -54,16 +57,17 @@ def main():
         save_keywords(file_id, keywords)
 
         # === QUESTION ANSWERING ===
-        ask_question = input("\n❓ Do you want to ask a question about the document? (yes/no): ").lower()
-        if ask_question in ["yes", "y"]:
-            question = input("Enter your question: ").strip()
-            answer = answer_question(raw_text, question)
-            print(f"\nAnswer: {answer}")
-            qa_content = f"Q: {question}\nA: {answer}"
-            save_to_file(qa_content, "qa_answer.txt")
-            save_qa(file_id, question, answer)
+        while True:
+            ask = input("\n❓ Ask a question about the document (or type 'exit' to stop): ").strip()
+            if ask.lower() == 'exit':
+                break
+            top_chunks = get_top_k_chunks(ask, split_text_to_chunks(raw_text))
+            context = top_chunks[0]
+            answer = generate_paragraph_answer(ask, context)
+            print(f"\n📘 Answer:\n{answer}")
+            save_to_file(f"Q: {ask}\nA: {answer}", "qa_answer.txt")
+            save_qa(file_id, ask, answer)
 
-        print("\n📁 All outputs saved in the 'outputs' folder.")
 
     except Exception as e:
         print(f"❌ Error: {e}")

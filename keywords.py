@@ -2,9 +2,8 @@
 
 from keybert import KeyBERT
 from sentence_transformers import SentenceTransformer
+embed_model = SentenceTransformer("all-mpnet-base-v2")
 
-# Load model once
-embed_model = SentenceTransformer("all-MiniLM-L6-v2")
 kw_model = KeyBERT(model=embed_model)
 
 def extract_keywords(text, top_n=10, method='maxsum'):
