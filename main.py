@@ -8,6 +8,7 @@ from keywords import extract_keywords
 from qa_advanced import answer_question
 from memory_store import load_memory, save_summary, save_keywords, save_qa, display_memory
 from utils import save_to_file, print_list
+from report_generator import create_pdf_report
 
 import os
 from memory_store import (
@@ -66,6 +67,10 @@ def main():
 
     except Exception as e:
         print(f"❌ Error: {e}")
+
+    
+    create_pdf_report(file_id, load_memory(file_id))
+
 
 if __name__ == "__main__":
     main()
