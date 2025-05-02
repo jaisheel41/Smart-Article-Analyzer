@@ -9,7 +9,7 @@ from qa_advanced import answer_question
 from memory_store import load_memory, save_summary, save_keywords, save_qa, display_memory
 from utils import save_to_file, print_list
 from report_generator import create_pdf_report
-from qa_falcon import generate_paragraph_answer
+from qa_mistral import generate_paragraph_answer
 from qa_advanced import get_top_k_chunks, split_text_to_chunks
 
 

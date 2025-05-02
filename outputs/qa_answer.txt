@@ -1,2 +1,2 @@
-Q: what is the most important point covered in this document
-A: Continuous learning and ethical deployment
+Q: What global risks are mentioned?
+A: AI development is not confined by national borders
